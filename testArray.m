@@ -5,13 +5,13 @@
 @end
 
 @implementation QuickSort
--(NSArray *) quick_sort:(NSArray *)unsortedArray{
-	int count = (int)[unsortedArray count];
-	if(count<=1){
-		return unsortedArray;
-	}
-	//先找出中心点数据
-    int pivot = [[unsortedArray objectAtIndex: (count/2)] intValue];
+-(NSArray *) quick_sort:(NSArray *)unsortedArray {
+    int count = (int)[unsortedArray count];
+    if (count <= 1) {
+        return unsortedArray;
+    }
+    //先找出中心点数据
+    int pivot = [[unsortedArray objectAtIndex: (count / 2)] intValue];
     NSMutableArray *smallerThanArray = [NSMutableArray array];
     NSMutableArray *largerThanArray = [NSMutableArray array];
     NSMutableArray *pivotArray = [NSMutableArray array];
@@ -19,7 +19,7 @@
     [pivotArray addObject: @(pivot)];
 
     for (int e = 0; e < count; e++) {
-    	//遍历原始数组
+        //遍历原始数组
         int num = [[unsortedArray objectAtIndex:e] intValue];
 
         if (num < pivot) {
@@ -27,7 +27,7 @@
         } else if (num > pivot) {
             [largerThanArray addObject: @(num)];
 
-        } else if (e != (count/2) && pivot == num) {
+        } else if (e != (count / 2) && pivot == num) {
             [pivotArray addObject: @(num)];
         }
     }
