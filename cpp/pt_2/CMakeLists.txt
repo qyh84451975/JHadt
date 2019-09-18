@@ -1,7 +1,3 @@
-# cd build
-# cmake ..
-# make
-# ./qyh
 #1.cmake verson，指定cmake版本
 cmake_minimum_required(VERSION 3.2)
 
