@@ -62,9 +62,9 @@ void Customer::set(long when) {
 
 bool Customer::isRight(int a) const {
     int count = 0;
-    while (a > 0) {
-        count += a % 2;
-        a = a >> 1;
+    while (a) {
+        count++;
+        a = a&(a-1);
     }
 
     if (count == 1) {
