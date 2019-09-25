@@ -1,9 +1,36 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+
+struct T1 {
+	int c;
+};
+struct T
+{
+	struct T1 *t;
+	int a;
+	int *b;
+};
 
 int main(int argc, char const *argv[])
 {
 
+	printf("%c\n", 108);
+
+	// for (int i = 0; i < 5; i++) {
+		// struct T t;
+		// struct T t1;
+		// struct T *t2 = (struct T *)malloc(sizeof(struct T));
+		// printf("%p %p %p\n", &t, &t1, t2);
+		// printf("%d %p\n", t2->a, t2->b);
+		// printf("%d\n", (&t)->a);
+		// printf("%d\n", t.a);
+		// printf("%p\n", t.b);
+		// printf("%d\n", (&t)->a);
+		// printf("%p\n", (&t)->b);
+		// printf("%p\n", t.t);
+	// }
 
 	// 弃用
 	// char buffer[50];
