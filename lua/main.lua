@@ -219,7 +219,14 @@ print(coroutine.status(co))
 --------------------|
 --]]
 
-
+--[[Lua执行流程
+luaL_newstate
+lua_newstate(l_alloc, NULL)
+(LG*)l_alloc()
+luaD_rawrunprotected(L, f_luaopen, NULL)
+f_luaopen()
+stack_init(L)
+--]]
 
 
 
