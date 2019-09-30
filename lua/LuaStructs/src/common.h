@@ -10,6 +10,8 @@
 typedef struct lua_State lua_State;
 
 #define MAX_INT INT_MAX
+#define MAXABITS    cast_int(sizeof(int) * CHAR_BIT - 1)
+#define MAXASIZE    (1u << MAXABITS)
 
 #define LUA_TNONE				(-1)
 #define LUA_TNIL				0
@@ -23,8 +25,27 @@ typedef struct lua_State lua_State;
 #define LUA_TTHREAD				8
 #define LUA_NUMTAGS				9
 
+#define BIT_ISCOLLECTABLE    (1 << 6)
+#define ctb(t)            ((t) | BIT_ISCOLLECTABLE)
+
 // 基本类型(0-3bits)
 #define novariant(x) ((x) & 0x0F)
+#define rttype(o)    ((o)->tt_)
+#define ttype(o)    (rttype(o) & 0x3F)
+#define val_(o)     ((o)->value_)
+#define ttnov(o)    (novariant(rttype(o)))
+#define checktag(o,t)        (rttype(o) == (t))
+#define checktype(o,t)        (ttnov(o) == (t))
+#define ttisnumber(o)        checktype((o), LUA_TNUMBER)
+#define ttisfloat(o)        checktag((o), LUA_TNUMFLT)
+#define ttisinteger(o)        checktag((o), LUA_TNUMINT)
+#define ttisnil(o)        checktag((o), LUA_TNIL)
+#define ttisboolean(o)        checktag((o), LUA_TBOOLEAN)
+#define ttisstring(o)        checktype((o), LUA_TSTRING)
+#define ttisshrstring(o)    checktag((o), ctb(TSHRSTR))
+#define ttislngstring(o)    checktag((o), ctb(TLNGSTR))
+#define ttistable(o)        checktag((o), ctb(LUA_TTABLE))
+#define ttisfunction(o)        checktype(o, LUA_TFUNCTION)
 
 #define l_assert assert
 #define check_exp(c, e) (e)
@@ -37,6 +58,10 @@ typedef ptrdiff_t l_mem;
 #define MAX_SIZET	((size_t)(~(size_t)0))
 #define MAX_SIZE	(sizeof(size_t) < sizeof(integer) ? MAX_SIZET \
                           : (size_t)(LLONG_MAX))
+#define lua_numbertointeger(n, p) \
+    ((n) >= (number)(LLONG_MIN) && \
+     (n) < -(number)(LLONG_MIN) && \
+    (*(p) = (integer)(n), 1))
 
 #define cast(t, exp) ((t)(exp))
 #define cast_int(i) cast(int, (i))

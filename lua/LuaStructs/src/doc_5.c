@@ -1,3 +1,8 @@
+/**
+ * lua字符串
+ */
+
+
 #include "structs.h"
 #include <stddef.h>
 #include <string.h>
@@ -70,7 +75,9 @@ static TString *createstrobj (lua_State *L, size_t l, int tag, unsigned int h)
 	GCObject *o;
 	size_t totalsize;
 	totalsize = sizelstring(l);
+    // 申请一块totalsize大小的内存，并转换为GCObject*，目的是为了赋值marked和tt
 	o = luaC_newobj(L, tag, totalsize);
+    // 将GCObject指向的这块内存转换成TString指针
 	ts = gco2ts(o);
 	ts->hash = h;
 	ts->extra = 0;
@@ -125,6 +132,8 @@ TString * l_newlstr (lua_State *L, const char *str, size_t l)
 		return ts;
 	}
 }
+//#define TEST_5
+#ifdef TEST_5
 
 static void dump_strt (lua_State *L)
 {
@@ -146,7 +155,6 @@ static void dump_strt (lua_State *L)
     }
 }
 
-#ifdef TEST_5
 int main (int argc, char const *argv[])
 {
 	lua_State *L = l_newstate();
@@ -162,7 +170,14 @@ int main (int argc, char const *argv[])
     (void)str4;
     (void)str5;
     dump_strt(L);
+    
+    GCObject * o = luaC_newobj(L, TSHRSTR, 2);
+    printf("gco tt = %d, marked = %d\n", o->tt, o->marked);
+    TString *ts = gco2ts(o);
+    printf("ts tt = %d, marked = %d\n", ts->tt, ts->marked);
 
+    // @todo 长字符串存储
+    
 	return 0;
 }
 #endif

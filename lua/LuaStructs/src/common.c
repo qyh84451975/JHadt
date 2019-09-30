@@ -28,3 +28,15 @@ GCObject *luaC_newobj(lua_State *L, int tt, size_t sz)
 	g->allgc = o; // 将新创建的obj添加到allgc链表最后
 	return o;
 }
+
+int luaV_equalobj (lua_State *L, const TValue *t1, const TValue *t2)
+{
+    if (ttype(t1) != ttype(t2)) {
+        if (ttnov(t1) != ttnov(t2) || ttnov(t1) != LUA_TNUMBER)
+            return 0;
+        else {
+            integer i1, i2;
+            
+        }
+    }
+}
