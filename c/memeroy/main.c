@@ -6,7 +6,7 @@
 #include <string.h>
 
 /**
- * void * malloc(size_t, size)
+ * void * malloc(size_t size)
  *
  * 该函数用于从堆中分配内存空间，内存分配大小为 size。如果内存分配成功，则返回首地址；如果内存分配失败，则返回 NULL。
  */

@@ -1,29 +1,19 @@
-#ifndef __STACK__
-#define __STACK__
+#ifndef __STACK_H__
+#define __STACK_H__
 
-#define OK 1
-#define ERROR 0
-#define TRUE 1
-#define FALSE 0
-typedef int Status;
-typedef int ElemType;
+struct Node;
 
-typedef struct Node
-{
-	ElemType data;
-	struct Node *next;
-} Node;
+typedef struct Node *PtrToNode;
+typedef PtrToNode Stack;
+// 假设存储数据为整型
+typedef int ElementType;
 
-typedef struct Stack
-{
-	Node *top;
-	int count;
-} Stack;
+int IsEmpty (Stack S);
+Stack CreateStack (void);
+void MakeEmpty (Stack S);
+void DisposeStack (Stack S);
+void Push (Stack S, ElementType X);
+ElementType Top (Stack S);
+ElementType Pop (Stack S);
 
-Status Init(Stack *S);
-Status Push(Stack *S, ElemType e);
-Status Pop(Stack *S, ElemType *e);
-int Count(Stack *S);
-
-
-#endif /* __STACK__ */
+#endif /* __STACK_H__ */

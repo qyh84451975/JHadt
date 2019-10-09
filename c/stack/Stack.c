@@ -1,46 +1,102 @@
 #include "Stack.h"
+#include "../common.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-Status Init(Stack *S)
+struct Node {
+	ElementType Element;
+	PtrToNode Next;
+};
+
+int IsEmpty (Stack S)
 {
-	S->count = 0;
-	return OK;
+	return S->Next == NULL;
 }
 
-int Count(Stack *S)
+Stack CreateStack (void)
 {
-	return S->count;
+	Stack S;
+	S = malloc(sizeof(struct Node));
+	if (S == NULL)
+		writeerr("fail to malloc memeroy.");
+	S->Next = NULL;
+	MakeEmpty(S);
+	return S;
 }
 
-Status Push(Stack *S, ElemType e)
+void MakeEmpty (Stack S)
 {
-	Node *node = (Node *)malloc(sizeof(Node));
-	node->data = e;
-	node->next = S->top;
-	S->top = node;
-	S->count++;
-	return OK;
-}
-
-Status Pop(Stack *S, ElemType *e)
-{
-	if (S->count == 0) return ERROR;
-	*e = S->top->data;
-	Node *node;
-	node = S->top;
-	S->top = S->top->next;
-	free(node);
-	S->count--;
-	return ERROR;
-}
-
-void _dump_stack(Stack *S)
-{
-	Node *node;
-	node = S->top;
-	while(node) {
-		printf("stack data: %d\n", node->data);
-		node = node->next;
+	if (S == NULL) {
+		writeerr("pls CreateStack first.");
 	}
+	else {
+		while (!IsEmpty(S)) {
+			Pop(S);
+		}
+	}
+}
+
+void DisposeStack (Stack S)
+{
+	MakeEmpty(S);
+	free(S);
+}
+
+void Push (Stack S, ElementType X)
+{
+	PtrToNode newNode = malloc(sizeof(struct Node));
+	if (newNode == NULL)
+		writeerr("fail to malloc memeroy.");
+	newNode->Element = X;
+	newNode->Next = S->Next;
+	S->Next = newNode;
+}
+
+ElementType Top (Stack S)
+{
+	if (!IsEmpty(S))
+		return S->Next->Element;
+	writeerr("cannot top empty stack.");
+	return 0;
+}
+
+ElementType Pop (Stack S)
+{
+	if (!IsEmpty(S)) {
+		PtrToNode temp = S->Next;
+		S->Next = temp->Next;
+		ElementType elem = temp->Element;
+		free(temp);
+		return elem;
+	}
+	writeerr("cannot pop empty stack.");
+	return 0;
+}
+
+static void dump_stack (Stack S)
+{
+	PtrToNode temp = S->Next;
+	while (temp) {
+		printf("%d\n", temp->Element);
+		temp = temp->Next;
+	}
+}
+
+int main(int argc, char const *argv[])
+{
+	Stack s = CreateStack();
+	Push(s, 1);
+	Push(s, 2);
+	Push(s, 3);
+	Push(s, 4);
+	dump_stack(s);
+	printf("pop = %d\n", Pop(s));
+	printf("top = %d\n", Top(s));
+	printf("pop = %d\n", Pop(s));
+	printf("top = %d\n", Top(s));
+	dump_stack(s);
+
+
+
+
+	return 0;
 }

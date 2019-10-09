@@ -16,8 +16,10 @@ struct T
 int main(int argc, char const *argv[])
 {
 
-	printf("%c\n", 108);
+	const char *str = "abcde";
+	printf("sizeof = %lu strlen = %lu\n", sizeof(*str), strlen(str));
 
+	// printf("%c\n", 108);
 	// for (int i = 0; i < 5; i++) {
 		// struct T t;
 		// struct T t1;
