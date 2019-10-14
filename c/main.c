@@ -16,8 +16,15 @@ struct T
 int main(int argc, char const *argv[])
 {
 
-	const char *str = "abcde";
-	printf("sizeof = %lu strlen = %lu\n", sizeof(*str), strlen(str));
+	int n = 0;
+	loop: if (getchar() != '\n') {
+		n++;
+		goto loop;
+	}
+	printf("%d\n", n);
+
+	// const char *str = "abcde";
+	// printf("sizeof = %lu strlen = %lu\n", sizeof(*str), strlen(str));
 
 	// printf("%c\n", 108);
 	// for (int i = 0; i < 5; i++) {

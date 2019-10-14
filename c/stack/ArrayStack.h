@@ -7,7 +7,7 @@
 struct StackRecord;
 typedef struct StackRecord *Stack;
 
-typedef int ElementType;
+typedef char ElementType;
 
 int IsEmpty (Stack S);
 int IsFull (Stack S);
@@ -16,6 +16,6 @@ void DisposeStack (Stack S);
 void MakeEmpty (Stack S);
 void Push (Stack S, ElementType X);
 ElementType Top (Stack S);
-void Pop (Stack S);
+ElementType Pop (Stack S, int status);
 
 #endif /* __ARRAY_STACK_H__ */
